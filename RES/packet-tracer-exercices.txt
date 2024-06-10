@@ -1,0 +1,43 @@
+2.3.7
+enable -> enter privileged mode(#)
+clock set hh:mm:ss dd mmm yyyy -> sets the clock to the specified date
+			       -> execute in privileged mode (#)
+show clock -> shows the current clock
+
+2.3.8
+show version -> show the current OS version in the switch
+
+2.5.5
+show running-config -> shows the current switch's configuration
+		    -> alternative: show run
+configure terminarl -> enter (config)# mode
+hostname <<name>> -> changes the devices name to <<name>>
+line console 0 -> enter (config-line)# mode
+	       -> execute in config mode ((cofig)#)
+password <<password>> -> sets <<password>> as the password that'll be asked when entering the devices console
+login -> makes the device ask for a password to enter vty
+      -> execute in command line mode (config-line)#
+enable password <<password>> -> makes device ask for password to enter privileged execution mode
+			     -> run in (config)# mode
+enable secret <<password>> -> samething as enable password <<password>> but the given password is encrypted when user tries to see it in console
+service password-encryption -> encrypts all currently set passwords
+banner motd "<<message>>" -> sets a message to appear when user connects to vty
+copy running-config startup-config -> saves the current running configuration as the startup configuration
+				   -> run in privileged mode
+2.7.6
+interface vlan x -> goes int (config-if)# mode 
+		 -> x being the number of the interface 
+
+ip address <<ip address>> <<sub network mask>> -> sets the ip address & subnetwork mask
+no shutdown -> set configured interfaces to up (?)
+
+show ip interface brief -> shows the ip of all interfaces
+
+2.8.1
+2.8.2
+ping <<ip address>> -> ping the given ip address
+		    -> it's common for the first ping ever to a new ip address to time out but the second normally gets a reply
+		    -> it's important to check connectivity in both directions, if it works in one direction but not the other, the issue is probably the firewall
+
+2.9.1
+

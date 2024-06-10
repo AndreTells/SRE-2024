@@ -1,0 +1,108 @@
+2.4 repetition
+pallier les problemes poses par 1 machine du ressau local => enlever / en panne / ....
+
+&
+
+il existe deja repeteur pour bus cable
+	- processus du repeteur
+		- recoit 1 signal 
+			- normalment signal est attenue
+		- filtre
+		- regenere le signal	
+		- le transmet
+=> version generalise HUB: multi-repetition
+	- repete plusieursr signaux
+	- topologie physique: etoile => topologie logique: bus 
+		- topologie etoile etendue -> utiliser cascade dans un HUB 
+	- sur reception d'un signal depuis un port regenere le signal et le retransmet sur tous les port (y compris la port de reception)
+	- dist max HUB a un machine est 90 m VS distance max du BUS de 200 m entre deux machines
+	- PORTS du HUB
+		- ports de connections a peripheriques
+		- connecteur BNC pour 10 base 2
+		- connecteur AUI your 10 base 5
+		- cascade vers un deuxieme HUB (peut etre un port special ou non)
+			- button MDI/ MDI-x
+			- obs: pas besoin d'un routeur 
+	- paralellism
+	- cable avec 10 base T 
+	-cables
+		- transmission differentielle sysmetique par soustraction
+		- unprotected twisted pair -> anulation des interferances eletromagnetiques (EMI)
+		- crossover cable == cable croise
+		- straight through cable == cable droit	
+		- MDI/ MDIX -> define si le cable est croise ou droit 
+		=> pre cablage permet la convergence des services :
+			- data
+			- voix
+			- video
+			
+obs cablage en batiments
+	- extend dist peripherique a HUB a 100 m
+	- cablage horizontale ~ ressau de ville
+		- cordon liason : connnect peripherique au cablage du batiment
+		- "cablage du batiment"
+		- jantiere: connecte cablage du batiment au HUB 
+	- cablage verticale / epine dorsale de la resau local/ Back bone
+		- connect tous les cablages horizontales
+		- plus vite que la vitesse du  cablage horizontale par un facteur de 10
+
+
+2.5 Commutation => Commutateur/ SWITCH
+- topologie logique en bus
+- port/ interface d'access ( pour le RL)
+- si A transmet 1 trame a destination de B, alors le switche cree 1 segment logique ente A et B
+	- qnd la com A -> B est finie alors le segment logique est detruit
+- obs: s'il y a un autre peripherique que veut communiquer avec l'un des deux, il doit attendre que le segment logique soit detruit
+- micro segment -> plus petits des bus ( 2 machines connectes )
+	- pas de collision 
+	- simultaneite -> cable a 4 paires 
+		- Rj45 
+- multi-ponts levi(appears & dissapears)	
+ - 1 commutateur geer 1 table d'address MAC par apprentissage mais aussi 1 table (matrice ) de commutation qui indique les micro-segments actifs
+- bande passante du SWITCH = debit * (nb ports /2)
+- recourt a des memoires 
+	- par port
+	- commune ports 
+	- permet de mettre des communication en attente & diffusion generale c-a-d broadcast 
+
+
+
+- Pont/ Bridge 
+	- 
+	- doint eter capable de traiter un trame 
+	- 1 pont apprend la localisation des machines du RL au fur et a mesure de l'exploitation en alimentat un table de addresses MAC
+	- table de adress MAC
+		- au demarrag -> table vide
+		- sur reception d'un trame sur un interface, on lite l'addresse MAC source
+	 	- on ajoute (si absent) ou on met a jour (si present) le couple (address MAC, l'interface)
+		- (obs: registrer le date permet l'obscelesecence d'un entree de la table)
+		- si le adress MAC destination est presente dans la table, 
+			- soit meme interface que le source  -> c'est le meme segment/ cable -> on ne retransmet pas sur le deuxieme segment
+			- interface different -> segment different -> on retransmet sur le deuxiem segment/cable
+
+		- permet d'avoir communication sur le segment 1 et un deuxieme sur le segment 2
+
+- si le RL ne contient que des equipements de commutation alors on dit qu'on a 1 RL (totalement) commute
+- 3 methodes sont utilisees 
+	- cut & through 
+		- des qj'ai l'address MAC destination, alors micro segment et transmission
+		- arret l'analyse du signal a la destinatioin(6 premiers octets)
+		- la + rapide
+	- free error
+		- sans bruit ni collision
+	- store & forward
+		- enregistre les informations et retransmettre
+		- la plus lent
+
+
+
+
+
+
+
+debit-> ce que a ete announce ??????
+VS. 
+bande passant -> la realite ????????
+			
+C1: couche physique -> HUB
+C2: couche linquage de donnes -> PONT et SWITCH

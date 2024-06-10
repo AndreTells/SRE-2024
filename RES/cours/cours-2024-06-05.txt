@@ -1,0 +1,135 @@
+2.7.1 Adressage MAC Individuel
+
+- physique / permanent
+- non modifiable
+	- c'est illegal -> impersionattion de quelq'un de autre
+	- c'est possible de changer
+- Universelle / unique
+- 6 octets
+	- prefix: Organisationally Unique Identifier(OUI)
+		- chaque contsructeur se voit attribuer 1 code
+		- affectes a tous les NICs fabriques par ce consructeur
+		- 3 octets
+			- premier bit est 0
+			- 
+	- numero de serie 
+		- 3 octetts
+		- unique parmi les NICs de un meme constructeur
+
+- cette address est dite individuelle (unicast)
+- premier bit 
+	- 0 -> communication individuelle
+	- 1 -> communication avec plusieurs
+
+2.7.2 Mode de Diffusion
+- diffusion individuelle (unicast)
+	- A -----> B
+	- addressage individuelle (2.7.1)
+- diffusion generale(broadcast) 
+	- A -----> toute le monde dans le RL
+	- destination: 	FF.FF.FF.FF.FF.FF
+- diffusion de groupe(multicast)
+	- A -----> groupe de machines du RL 
+	- address de groupe programmable -> c'est pour ca q il est necessaire que ca soit modifiable
+		- chaque address IP de group (multicast) donnera lieu a la programmation d'un adress MAC de groupe
+		- le premier bit est a 1 -> different du OUI
+		- prefix de groupe: E???
+		- "3" octets: address IP
+			- techniquement utilise 4 octets mais le premier est toujours la meme chose  
+		- address : [01 00 5E] [address IP] 
+
+2.8 Domaine de Collision & domaine de (diffusion generale) broadcast
+2.8.1 RL par propagation/repetition 
+- 1 seul dommaine de collinnios & 1 seul domaine de brodcast
+
+2.8.2 Pontage
+- 1 pont bloque (ne rediffuse pas) une collision => 1 domaine de collision par segment
+- 1 seul domaine de broadcast
+
+2.8.3 RL commute
+- la commutation creee dynamiquement de micro segmetns sans collisions
+- la collision n'existe plus
+- 1 seul domaine de broadcast
+- le seul qu'est utilise aujourd'hui dans la plupart des cas quand un nouveau ressau est construit 
+
+2.8.4 Remarques: 
+- 1 routeur bloque le broadcast, n'importe comment il est fait
+- 1 routeur bloque aussi le multicast par defaut, MAIS il peut etere configure autoriser tt ou partie du multicast
+	- multicast RL -> MAC ADDRESS 
+	- multicast IP-> vision globale
+
+
+3 Inter Connexion de RL
+3.1 generalites/contexte
+- RLs sont interconnetes par de routeurs
+- Le routeur est 1 equimpement rezo qui sert a relier 2 ou plusieurs RLs
+	=> 1 routeur appartient a 2 ou plusieurs RL
+- 1 reuteur est une frontiere
+- 1 routeur dispose de 2/plusieurs interfaces, 1 par RL
+
+- router
+	- appareil de couche 3
+	- Routage de paquets
+	- pasarelle/gateway de couche 3 
+obs: bridge router -> "pasarelle/gateway" de couche 4
+
+
+Inter Rezo
+- ressau qu'est connectee a  plusieurs ressaus local par routeurs
+	- utilise un liason serie (resau point a point(couche 2 du modele OSI))
+		- SDLC (premier protocole cree)
+		- HDLC normalise
+		- (multitude de protocoles ... ex.:PPP)
+
+
+		- necessitent
+			- 1 connexion -> leve la ligne
+			- 1 mantient de la ligne
+				- trame d'administration (consomme du temps/ BP) 
+- route des paquets entre RLS
+- est gere par des organismes publics avec delegations a des operateurs de fornituer d'acces
+- Le routeurs qui permet d'interconnecter un ressaux local a l'inter rezo est dit router d'access / access gateway
+- l'inter rezo est compose de rezos d'operateurs public/prive & des liasons trans-continentales
+- l'inter rezo propose 1 maillage fort entre des routers-commuteurs entre RL(dit aussi routeur de distribution)
+- 1 RL peut etre constitue de plusieurs sous RL separes par des routeurs(dit router d'infra/ router d'extension) On parle aorl d'un RL etendu
+	=> 1 rl de plusieurs sous-RL
+3.2 IP: Internet(Interconnection of networks) Protocol
+- routage par lelayage de proche en proche 
+- IP est un protocole route
+	- remarque: il existe des protocoles de routage IP ex.: RIP/ OSPF/EIGRP/....
+		- utilises uniquement par les routers
+		- en generale, du multi-cast IP par protocole
+		- les protocoles de routage servent a la misa a jour dynamique des tables de routage IP (messages d'info sur l'etat des routes)
+- IP est un protocole non fiable, cad pas de gestion de erreur
+- fait du routage de paquets
+- un communication A->B donne lieu a plusieurs paquets et comme IP fonctionne en mode non connecte 
+- pas de controle de flux(redirectionner paquets dans la ressaux au cas ou un chemin prend trop longue)
+- 'best effort'
+- IP a besoin de 2 adjoints pour fonctionner: 
+	- arp-> address resolution protocole
+		- reponds: quelle st l'address MAC associee a une address IP ?
+		- 1 address IP est associe a une address MAC
+		- communication de la couche 3 avec le couche 1/2
+		- obs: peut etre utilise par d'auts que IP 
+	- rarp-> reverse adress resolution protocole
+		- MAC address -> IP address
+	- Interet Control messages Protocol (ICMP)
+		- pour la gestion des messages d'informations et surtout d'erreurs	
+
+obs: request for commets(RFC)
+	- document de specification d'un protocole
+	- gere par IETF (Task Force IP ) (sous partie de l'organisation DARPA)
+	- IAANA (nommage IP & attribution des address IP publics)
+		- contient le NIC
+		- delegation a des organismes publics par etat (ex france : AF NIC)
+			
+
+
+
+ex ICMP
+	ping A -> B
+	revient a envoyer un message ICMP appele request ECHO et attend la reception d'un message ICMP de reponse appele reply ECHO
+	- envoi de paquet qui ne trouve pas de dest, le dernier 
+	- router constate le fait 
+	- envoie 1 message d'erreur a la SRC
+- ICMP est encapsule dans un paquet IP

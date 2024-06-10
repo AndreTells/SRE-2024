@@ -1,0 +1,121 @@
+documents du moodle mis a jour, PSY module 2 sem. 2 
+
+code assembleur
+	- version lisible par humain VS version machine(seulemhent de code)
+		- 
+	- compiler avec gcc -s pour arreter le compilation dans le stage du code "BASIC"
+	- objdump on .o file to translate the machine code into a human readable version
+	- syscall -> vrai appel system
+	- compilation statique VS dynamique
+faire #CHECK pour verifier des erreurs 
+
+creation de processus
+	- fork()
+	- exit()
+	- obs: pere est responsable pour le terminaison du fils
+	=> pere doit attendre le fils finir -> utiliser wait() ou wait_pid()
+		- wait(&status) -> le status contient plus que juste le valeurs du status, alors il faut un analyse plus detaille 
+wait -> attends un fils 
+waitpid -> attends un fil specifique 
+pause -> attendre un signal
+	- s'il y a un traitement special pour le signal recu, le traitement est execute avant de liberer le pause
+sleep(x) -> wake process after AT LEAST x seconds
+alarm(x) -> wake process after EXCATLY x seconds
+
+gcc -D<<symbol>> -> compiles definifing the given symbol
+envp dans le declaration du main dans un programme .c -> variables de environnement
+
+execve -> remplace le code du programme par le code indique dans le execve
+
+echo $? -> prints the result of the last command executed
+
+WEXITSTATUS(status);-> see result of child process
+TODO: faire un mini shell
+	- lecture
+	- fork();
+	- execve();
+	- <<retour a lecture>>
+
+TODO: faire le exercice de synthese du fichier MPSYMod2Sem3Document.pdf
+
+interruption -> programme a sa execution arrete pour qu'un autre puisse etre execute
+	- interruption logicielle = interruption 128
+preemption -> implique dans un interruption de traitement
+	- programme commence a executer au place d'un autre
+	- noyau doit etre preemptive
+	- en mode noyau:
+		- si noyau preemptive -> reponse presque instantanee
+		- au cas contraire -> attendre q le processus sortir du mode noyau
+	- en mode user
+		- reponse presque instantane
+
+Analyse de signaux
+	- execute un groupe d'instructions
+	- chaque x ms on verifie s'il y a un signal
+
+	5 reactions par default
+		- CORE -> Term + dump mem. 
+		- TERM
+		- STOP
+		- CONT 
+		- IGN
+	
+	processus dan le PCB
+		- masquer de receptivite -> empeche le programme de recevoir signaux (?)
+		- table ge gestion signaux -> actions par default ou de trait defini par le programme
+		- obs: proprietes heritees du processus que le a cree
+	au demarrage du ordi
+		- vector de int savec 256 positions pour registrer codes de interruptions
+		- 1 par driver
+	- profondeur maximum de interruptions par signaux = 7
+	- signaux classiques 
+		- ceux q on va etudier
+		- 1 a 31
+		- signaux ont des noms symboliques -> portabilite du code
+			- standard de noms: SIG...
+			- signal.h -> definition des symbols dans un code C 
+		- plusieurs occurences d'un meme signal sont reduites a uneseule occurence
+		- SIGKILL/ SIGSTOP & SGCONT -> ne peuvent etre ni masques ni reprogrammes. Ils ne peuvent donc etre ignores
+		- SIGCHLD -> ne peuvent pas etre masques mais reprogrammes
+	- signaux temps-reel
+	- kill -l -> lister tous les signaux
+	- man 7 signal -> descriptions des signaux disponibles et leurs actions 
+		- eviter man 2 signal parce q c'est pas du POSIX
+	- facons de envoyer un signal
+		- raise -> signal au thread q le appel
+		- kill -> envoie un signal 
+		- killpg -> envoie un signal a un group
+		- pthread_kill -> envoie un signal a un thread specifique
+		- sigchild -> signal du fil vers le pere un fois qu'il est fini
+			- ne peut pas eter capture
+	- sigsuspend -> attend un signal specifique
+	- functions importants
+		- kill	
+		- sigpromask()
+			- block -> ou logique entre les deux masques
+			- unblock -> et logique entre les deux masques
+		
+			- processus generale
+				- sigset_t mask;
+				- sigfillset(&mask);
+				- sifprocmask(BLOCK, &mask, null);
+				- sigemtySet(&mask);
+				- sigadd(...)
+				...
+				- sigprocmask(unblock, &mask, null);
+actions critiques -> groupe d'actions qui ne peuvent pas etre interrompus
+actions non critiques -> groupe d'actions qui peuvent etre interrompues
+
+
+int resultat = kill(1234,0);
+	- 0 n'est pas un signal	
+	- retourne TRUE si le processus actuel a le droit de envoyer 1234 un signal et FALSE du contraireq
+- TODO: chercher plus sur sa_flag dans sigset_t
+	- obs: on utilise juste le flag restart parce q les autres concerne la programmation temps reel
+	- comportementt defaut -> sa_flag = 0;
+
+
+
+execute installSignalManager at the start of the code 
+comment faire un fonction qui a par parametre un fonction
+SIG_DFL-> fonction default de traitement de signaux

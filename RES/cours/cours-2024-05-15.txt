@@ -1,0 +1,101 @@
+ch. 1 Intro rezos- sys. exploitation cisco
+ch. 2 Intro IOS <- sys. exploitation cisco
+		- shell oriente au serveurs CISCO
+		- similaire au shell linux
+ch. 3 Pile de Protocoles <- plus importante 
+
+cours de ressaux:
+1 - Generalites (Pile)
+2 - ressaux locaux / technology 'ethernet'
+3 - Interconnection des ressaux locaux (RL)
+	-> (routage) / Internet protocole (IP)
+4 - TCP
+5 - aprofondissement sur l'IOS
+ 
+
+Aujourd'hui: [NOTION GENERALE] 
+
+
+Bus rezo ~= Barramento
+	-> utilise pour creer un ressaux locaux
+	-> communication entre des ordinateurs dans un espace loacux
+	-> [au debut de l'internet] cable de coaxial de cuivre
+	-> [Actuellement] fait avec du WIFI
+
+Routers
+	-> connectent les differents ressaux locaux
+
+Heterogeneite de RL -> differents ressaux locaux sont connectes de facon differents
+
+OSI = Open system interconnection
+	-> mis en place 1973
+	-> ne contraints pas le technologie que sera utilise pour creer le ressaux
+
+classification de ressaux:
+	-> ressaux longue distance: WAN = Wide Area Network
+		-> ressaux point a point ~= deux ressaux sont connectes
+		-> modem RTC[obsolete]
+		-> xDSL
+
+	-> ressaux moyen distance: MAN = Metropolitan Area Network
+		-> "ressaux local etendu"	
+
+	-> ressaux local : LAN = Local Area Network
+		-> ressaux en BUS
+		-> multi access ~= peut ajouter des autres machine
+		-> vitesse
+			-> 10 Mbs/s Normal
+			-> 100 Mb/s Rapide
+			-> 1 Gb/s 
+			-> 10 Gb/s
+
+	-> PAN: Personal Area Network
+		-> Bluetooth
+		-> point a point
+
+actuellement: les ressaux sont WAN ou LAN
+communication entre ordinateurs en ressaux differennts:
+ordi. A -> Routeur dans la ressaux de A -> Ressaux Fournisseur d'acces Intermediare (FAI) [~= DSLAM] -> [connect par passarelle entre operateurs]-> ... ->Ressaux National de A -> ressaux national de B -> routeur dan le ressaux de B -> ordi. B
+
+Protocole pour interconnexion en ressaux locaux != Protocole de Interxconnetion de ressaux locaux
+
+Protocoles
+	-> regles de fonctionement
+		=> protocole data unit PDU = format 
+
+	-> Regit le fonctionement d'un couche
+	-> le protocole sert a fair echanger infos entre 2 chouche pairs (c'est-a-dire meme niveau)
+	-> 1 couche offre 1 service a un chouche superieure (i+1) en faisssant appel a un autre couche inferieur(i-1)
+
+Interface
+	-> ensemble de Service Access Point (SAP) d'un meme protocole
+	-> utilise le PDU utilise par le couche qui va recevoir le information de retour (?)
+
+OSI
+	-> model theorique
+	-> 7 couches
+		7. application 
+			-> client http (browser) <--> serveur http (httpd: apache, wamp, ...)
+		6. presentation
+			-> structure data ---serializations-> suite d'octets
+			-> suite d'octets -deserializations-> structure data
+			-> codage
+		5. session
+			->dialogue 
+		4. transport
+		3. network (routage)
+		2. data link
+		1. physical
+
+Internet (TCP/IP)
+	-> 4 couches
+	-> implemented model 
+	-> follows rules established by the OSI modeli
+
+Fonction des couches:
+	-> Traitement de donnees: couches 5 a 7 du modele OSI
+	-> transimssion de data: couches 1 a 4
+		-> ressaux local: couches 1 et 2
+
+obs: fini en p -> protocole
+     fiin en d -> demon -> program qui est toujours en execution

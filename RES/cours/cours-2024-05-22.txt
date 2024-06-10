@@ -1,0 +1,51 @@
+exercice en packet tracer
+- server connecte a un switch connecte a un ordi
+- faire un copie de la res & connecter avec un router
+- cofiguration du switch 
+	- enable
+	- configure terminal
+	- interface vlan1
+	- ip address 192.168.0.2
+
+Modes Importants:
+mode non privilegie    | R>            |                          | consultation globale
+mode privilegie        | R#            | R>enable                 | conf grobale & consultation totale
+mode config            | R(conf)#      | R#configure terminal     |
+mode composant Mat/Log | R(conf-if)#   | R(conf)# interface f10/1 | conf interface
+		       | R(conf-line)# | R(conf)# line 0 15       | conf line 
+Commands: 
+exit -> remonte au mode un niveau avant
+ctr-z / end -> remonte a mode privilegine
+
+
+
+2/ Rezos Locaux
+
+1 ere rezo local: IBM/ rezo en anneau (Token Ring)
+	- packets passe dans un seul direction ex A-> B-> C -> A
+	- un seul message circule dans le rezo
+
+	- a cause de l'experience, IBM propose 1 modeel a la normalisation: system netwtork arch.(SNA)
+		- rejete
+		- ISO s'inspire de SNA et propose open system interface (OSI)
+
+Digital/Intel/Xerox (DIX)
+	- propose techno BUS a access aleatore (tolerante aux accidents)
+	- ~1993 -> version dite ethernet 1 (refusse a la normalisation)
+	- 1972 -> Integration TCP/IP dans LINUX et DIX propose un STD a l'IEEE -> Ethernet V2
+		- protocole CSMA/CD
+2.1/ Intro
+	- V1 ALOHA -> rezo point a point
+		- communication aerien
+	- V2 CSMA/CD: Carrier Sense Multiple/ Collisioun Detect
+		- communication par cable
+		- detection de porteuse (savoir s'il y a un signal dans le BUS) -> calcule du temps de Silence (TS)
+		- Si TS> 9.6 micro seconds => droit d'emission
+		- ce qui emis doit etre = a la reception 
+			- permet de savoir s'il y a eu une colision
+		- tous les machines recoivent mais seul le destination consome(c'est a dire passe le packet du niveau physique au niveau plus haute)
+		- 0 <  taille trame < 32        -> bruit
+		- 32<= taille trame < 64        -> collisse (du au mechanisme de Round trip Time)
+		- 64<= taille trame < 1500(MTU) -> trame avec un message relevant
+2.2/ Protocoles Ethernet
+2.3/ Propagation: BUS en cable 

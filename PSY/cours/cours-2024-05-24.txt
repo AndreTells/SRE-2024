@@ -1,0 +1,63 @@
+manuel LINUX
+- la fonction des differents sections
+- sections importants:
+	- 2: appel systeme
+	- 3:la librarie des sous routines
+	- 7:conventions
+
+Macro fonctions
+- porquoi les utiliser -> code plus legible
+- problemes de syntax:
+	- #defin CHECK(sts, msg)\
+				<<continuation de la fonction
+	- CHECK(n=read(...), "probleme de lecture");
+	 		   VS.
+	- CHECK(n=read(...)==-1)
+- performance meiux
+	- il substitue le code plutot q appeler un fonction
+
+PCB -> processus control block
+
+reentrance
+- partage de la section text pour plusieurs processus qui executent le mem programe
+- economie de memoire principal
+- option sur le compilateur gcc
+
+etats d'un processus
+- etats possibles
+	- ELU -> le processus occupe le CPU
+	- PRET -> le processus est en attente de l'allocation CPU
+	- BLOQUE -> le processus est en attent de donnes indisponibles
+
+- changement d'etat
+	- election/ allocation -> le processus est selectionee par l'ordonnanceur
+	- requisition -> le temps CPU alloue est ecoule
+	- blocage -> signal genere quand le processus a besoin de donnees 
+	- reveil -> signal recu par le processu delivrant les donnees 
+
+
+- obs preemptio'est equivalent a l'interruption d'un election 
+	- juste si le noyau du ordi est preemptive 
+
+ordonnaceur
+- modes of LINUX scheduler 
+	- SCHED_NORMAL/ SCHED_OTHER -> equite de execution entre processus
+		- obs: egalite(temp en CPU igual) vs equite (prend en compte le temps que a deja ecoule)
+		- priorite initiale des processus = 19
+	- SCHED_FIFO
+		- premier processus appel est le premier a execute
+	- SCHED_RR
+		- rounding robin algorithm
+		- idem. SCHED_FIFO but w/ circular list (?)
+- pour le processus avec priorite > 39 SCHED_FIFO/RR est utilise et NORMAL pour les autres
+- command 'nice'
+- obs : processus de migration
+	- 1 per computer core
+	- sends a process from a computer core to another computer core
+- obs : C dans le command ps -l indique la classe d'ordonnacement C = 0 -> time sharing
+
+muli thread
+- fork
+	- return 0 to new thread
+	- return PID of new thread to parent
+- obs: bash est simplesment un programa que faz um fork e manda o processo filho rodar o comando execve("...") no comando que o usuario utilizou

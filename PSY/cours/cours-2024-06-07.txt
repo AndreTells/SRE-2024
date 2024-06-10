@@ -1,0 +1,23 @@
+1 thread par processus: pour parteger des data il fault passer le mecanisme "partage memoire (shn)"
+shn est vue come un fichiers (a besoin de droits access)
+- cout communicationt entre threads ---> ordonnacement des taches a l'echelle d'un processus en prennent en compte le quantite de threads
+- fork
+
+pthreads(POSIX Threads)
+- thread
+	- pthread_create 
+	- commutation de contexte plus lente
+	- presque comme un processus fils, mais avec la memoire partage 
+	- signaux
+		- par default: si le processus recoit un signal, n'import quel thread peut gerer le signal
+		- pthread kill pour envoyer un signal a un thread specifique
+	- peut avoir des proprietes differeents dans un mee procesuss
+	- fonction associe a un thread
+		- signature defini
+		- fini par pthread_exit(...);
+		- faire cast du type funcThread_t pour passer le fonction au pthread_create 
+- il y a des threads avec de fonction specifiques ?????
+- pthread_join est equivalent du wait pour un processus fils
+
+- pthread_mutex_t
+ 	- implementation de ressource partage en C

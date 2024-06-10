@@ -1,0 +1,43 @@
+Question 1 Item A: 4194304
+Question 1 Item B: 
+124419
+Question 1 Item C:
+Le command est 'ps -q 1 -o pid,user,etime,state,comm'
+Question 1 Item D:
+ps: /usr/bin/ps /usr/share/man/man1/ps.1.gz
+Question 2
+pegar executavel dps
+Question 3
+Question 3 Item A:
+l'ordonnanceur utilise c'est le CFS(completely fair scheduler)
+Question 3 Item B:
+l'indice nice est un chiffre entre +19(moins important) et -20(plus important) qui determine l'importance d'un processus pour l'ordonnaceur
+Question 3 Item C
+les appels systeme sont: nice, getpriority, sched_get_priority_max, sched_get_priority_min, 
+Question 3 Item D:
+le commands sont nice et setpriority
+Question 3 Item E:
+il depend du command, il y en a des commands que ne demandent pas de privilege
+Question 4
+Question 4 Item A:
+<<code en PSYMod2Q4.c>>
+Question 4 Item B:
+Le processus pere dans ce contexte est le terminal
+Question 4 Item C:
+On observe que le pid du processus augument par 1, c'est-a-dire change, pendant que le pid du pere reste le meme
+Question 5
+<<code en PSYMod2Q5.c>>
+Question 6:
+un total de 7 processus sont crees, en excluant le processus original
+Question 7
+Question 7 Item A:
+la documentation est dans le fichier /usr/share/man/man3/sleep.3.gz
+le fonction n'est pas un appel systeme
+Question 7 Item B:
+l'intruction sleep(10) fait le thread attendre 10 seconds
+le processus qui a appele le fonction devient suspendue jusqu'au fin du periode defini par le sleep
+Question 8
+on constate que le thread qui a appelle sleep a le etat S
+selon le manuel, l'etat s'appelle 'interruptable sleep'. C'est un situation ou le processus ne fait rien mais peut etre interrompu
+Question 9
+<<code en PSYMod2Q9.c>>

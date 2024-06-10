@@ -1,0 +1,37 @@
+Question 1: la commande c'est 'kill -l'
+
+Question 2:
+- la command c'est 'kill -l SITSTP'
+- la command c'est 'kill -l 10'
+
+Question 3:
+- le signal represente un "arret de clavier" et fait l'action Term -> action default pour terminer un processus
+- le signal represente qu'un process fil a termine sa execution ou a ete arrete  action Ign -> action default pour ignorer
+- le signal represente que stop a ete tape dans le terminal et fait l'action Stop ->  action default pour arreter le processus
+
+Question 4:<<test en terminal avec code infini.c>>
+
+Question 5:
+- il faut digiter 'man 2  kill'
+- oui 
+- oui 
+- on obitient si le processus a recu le signal 0 ou non
+
+Question 6:
+- man 2 alarm
+- il est utilise pour envoyer un signal SIGALRM au processus que a utilise la fonction dans un numero specifie de seconds
+
+Question 7:
+- man 2 pause
+- il est utilse pour faire le processus attendre jusqu'a qu'il recoit un signal 
+
+Question 8: il ecrit Alarm Clock dans stdout apres 10 seconds et le processus termine;
+
+Question 9: 
+- c'est dans le /usr/include/signal.h (il faut executer le command cpp -v pour trouver l'information)
+- non, mais il appell un autre fichier .h que les contient 
+- /asm/signal.h
+
+Question 10: file not available 
+
+Question 11: 

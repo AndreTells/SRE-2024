@@ -1,0 +1,96 @@
+programmation system est de la programmation concurrent
+
+programmation concurrent:
+	- processus / threads en parallel
+	- + vitesse
+	- taches + complex 
+	- partage d'info
+	- coordination	
+
+OS
+	- multi-taches => plusieurs programmes en parallel 
+	- programme -> data + algo. dans le disques
+	- processus -> pile d'exec. + data + algo dans la memoire	
+		- peut avoir plusiers threads
+	
+	- structures centralisees -> Mainframes
+	- virtualise le machine -> gere la relation du utilisateurs avec le materiel
+
+UNIX
+	- fichiers
+		- un fichier c'est 1 une suite d'octets
+		- tout est fichier
+
+Ordi moderne
+	- UAL (ALU) => Unite arithmetique & logique
+	- RAM => rapid access memory
+	- peripheriques
+	- microcontroleurs relient un categorie de peripherique (ex: USB)
+
+	- architecture de Von Neumman 
+		- processus 
+		- memoire vive
+		- machine sequentielle
+		- execute un seul programme
+		- SO est toujours dans la memomire
+			- charge automatiquement quand le ordi est allume
+			- charge aussi le shell par default
+ 
+		- substituition / recouvrement
+			- OS appelle programme dans le shell 
+			- substitute le shell par le programme appelle
+			- [Quand le programme est fini] substitute le programme par le shell
+	
+	- structures centralisees -> Mainframes
+	- virtualise le machine -> gere la relation du utilisateurs avec le materiel
+
+
+
+
+
+obs: l'ordi passe 80% du temps a faire des E/S; 20% c'est du traitement de donnes. Pourtant le deuxieme c'est ce que veut l'utilisateur
+
+[centro de varias camadas] materiel <- Noyeau/ Kernel <- Bibliotheques <- Shell <- Applications
+
+Materiel
+
+Kernel 
+	- Gestionnaire de processus
+		- fournir 1 fonctionement multi-tache avec un execution sequentielle
+		- envoye de signal pour 
+			- terminer des processus
+			- signaler qu'un processus est termine
+			
+	- Gestionnaire mem.
+		- MMU => memory management unity
+		- segmentation de la mem
+		- allocation de la mem
+		- mem virtuelle
+			- swapping
+			- pagination
+		- obs: disque recoit/utilise des blocs
+	- Driver pour chaque peripherique
+		- 1 pseudo fichier en mode caractere pour un grande parti de peripherique
+			- major number-> meme numero implique que les commands sont dans le meme groupe
+			- minor number
+
+		- 1 pseudo fichier pour introduire les peripheriqe de stockage des fichiers humains(represente par - dans le terminal) ranges dans un arborescence(la notion de repertoire(represente par d dans le terminal))
+			- necessite d'un system de fichiers (file system)
+		
+	- obs: il existe des drivers purement logiciel ex.: le IP
+	- obs: 1 fichier = 1 suite d'octets
+
+Bibliotheques
+	- SysV -> version 5 du system develope a bell labs pour le SO open source UNX
+	- BSD -> Berkley Software Distribute
+	- GNU -> branch ajoute par LINUX
+	- obs: POSIX
+		- PORTABLE Operating System IX (UNIX)
+		- interface aux vrais implementations du system
+		- collection de .h
+		- a la configuration, il est choisis quel implementation est lie a chacun des interfaces de POSIX
+
+	- ex: lib de math
+		- libm.a -> libraire statique
+		- libm.so -> libraire dynamique
+		- math.h -> interface

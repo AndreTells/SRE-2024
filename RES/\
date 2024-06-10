@@ -1,0 +1,53 @@
+2.7.1 Adressage MAC Individuel
+
+- physique / permanent
+- non modifiable
+	- c'est illegal -> impersionattion de quelq'un de autre
+	- c'est possible de changer
+- Universelle / unique
+- 6 octets
+	- prefix: Organisationally Unique Identifier(OUI)
+		- chaque contsructeur se voit attribuer 1 code
+		- affectes a tous les NICs fabriques par ce consructeur
+		- 3 octets
+			- premier bit est 0
+			- 
+	- numero de serie 
+		- 3 octetts
+		- unique parmi les NICs de un meme constructeur
+
+- cette address est dite individuelle (unicast)
+- premier bit 
+	- 0 -> communication individuelle
+	- 1 -> communication avec plusieurs
+
+2.7.2 Mode de Diffusion
+- diffusion individuelle (unicast)
+	- A -----> B
+	- addressage individuelle (2.7.1)
+- diffusion generale(broadcast) 
+	- A -----> toute le monde dans le RL
+	- destination: 	FF.FF.FF.FF.FF.FF
+- diffusion de groupe(multicast)
+	- A -----> groupe de machines du RL 
+	- address de groupe programmable -> c'est pour ca q il est necessaire que ca soit modifiable
+		- chaque address IP de group (multicast) donnera lieu a la programmation d'un adress MAC de groupe
+		- le premier bit est a 1 -> different du OUI
+		- prefix de groupe: E???
+		- "3" octets: address IP
+			- techniquement utilise 4 octets mais le premier est toujours la meme chose  
+		- address : [01 00 5E] [address IP] 
+
+2.8 Domaine de Collision & domaine de (diffusion generale) broadcast
+2.8.1 RL par propagation/repetition 
+- 1 seul dommaine de collinnios & 1 seul domaine de brodcast
+
+2.8.2 Pontage
+- 1 pont bloque (ne rediffuse pas) une collision => 1 domaine de collision par segment
+- 1 seul domaine de broadcast
+
+2.8.3 RL commute
+- la commutation creee dynamiquement de micro segmetns sans collisions
+- la collision n'existe plus
+- 1 seul domaine de broadcast
+- le seul qu'est utilise aujourd'hui 
