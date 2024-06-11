@@ -40,4 +40,8 @@ ping <<ip address>> -> ping the given ip address
 		    -> it's important to check connectivity in both directions, if it works in one direction but not the other, the issue is probably the firewall
 
 2.9.1
+2.9.2
+3.5.5
+(how to use simulation mode)
+4.6.5
 
