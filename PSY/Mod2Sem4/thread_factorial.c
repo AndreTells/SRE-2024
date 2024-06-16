@@ -1,3 +1,4 @@
+#include<semaphore.h>
 #include<stdlib.h>
 #include<stdio.h>
 #include<pthread.h>
@@ -24,7 +25,7 @@ int main(int argc, char** argv){
 	factorial_thread_data* threads = (factorial_thread_data*) malloc(len*sizeof(factorial_thread_data));
 	pthread_t* tid = (pthread_t*)malloc(len*sizeof(factorial_thread_data)); 
 
-	for(int i=0; i< len; i++){
+	for(int i=1; i< len; i++){
 		threads[i].input = atoi(argv[i]);
 		pthread_create(&tid[i],NULL,thread_function,(void*)&threads[i] );
 	}

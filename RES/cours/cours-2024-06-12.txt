@@ -1,0 +1,90 @@
+1 Adressage Classfull & subnetting
+1.a classfull echelle octet
+	-> avec octet plein
+	-> notion de classe: c'est a  dire l'espace d'@ IP sera decompose en sous -espaces 
+		- appartient a des classe differents
+	classes du IP et le poids du priemier octess
+		A: 0xxx -> Rl(unicast & broadcast sur RL)
+			-> normalement des militaires 
+			-> fourniseurs d'access internet
+		B: 10xx -> Rl(unicast & broadcast sur RL)
+			-> banques multinacionales
+			-> universites
+			-> ...
+		C: 110x -> Rl(unicast & broadcast sur RL)
+				-> petits entreprises
+		D: 1110 -> multicast
+		E: 1111 -> inter rezo
+	- ip speciaux
+		- 0.0.0.0 -> address par defaut des machines
+		- 127.0.0.0 -> reseau de bouclage 
+		- 127.0.0.1 -> reseau de la machine dans le ressau de bouclage
+	- premier RFC
+
+1.b subnetting
+	- deuxieme RFC
+	- 1 RL frome de sous ressaux locaux
+	- 1 plage IP decomposee en sous-plage
+	- on a mordu (emprunte des bits) sur l`@ pour en faire l'@ de la sous rezo
+	- introduit pour meillure exploiter les rezo de taille moyen
+	- demande de la routage interne
+
+
+2 Routage
+2a prncipe 
+	- relayage 
+	- comment on determine le prochain router 
+	- routeur fait partie des 2 ressaux
+2b processus
+	-infos: chaque machine IP & router dispose d'un @ IP , donc d'un processus de routage qui exploite une table de routage pour determiner le prochain
+	- 2chaque entree de la table fournit 1 eus d'infos(attributs) dont 2 attributs essentiels
+		- le couple (DEST, MASK-DEST)
+			- MASK-DEST = 0.0.0.0 -> DEST = 0.0.0.0
+	- L'@ du prochain 
+		- 0.0.0.0: il y a pas prochain c'est destinee a le peripherique meme 
+	+ d'autres attributs :
+		- interface
+		- cout
+		- ...
+- c'estq quoi 1 @ DEST:
+|(masque plein)
+|	- @ d'un machine: non utilise
+|		- c'est deconseille de le modifier(c'est illegal de le faire)
+|	- @ d'un RL.:(RL d'appartient)
+|	- groupe de RL
+|	- le reste
+v(masque vide)
+order par masque  		
+
+
+- on recoit un paquet, contenant l'@ du DEST (IP_dest). L'entree courante (EC) recoit la 1 entree dans la table routage (TR)
+	EC <- TR[0]
+	trouve <- false
+	do 
+		res <- IP_dest & EC.MASK_DEST
+		si ( res == EC.DEST) trouve <- vrai
+		sinon EC<- suivant dans le TR
+	while non trouve 
+
+	si (non trouve) => destination innaccessible 
+			   fin du routage 
+	si prochain est la machine elle meme alors
+		@MAC_dest = ARP(@IP_dest)
+	sionon
+		@MAC_dest = ARP(@IP_prochain)		
+
+	demande a la couche 2 de  envoyer le paquet a l'@ MAC_dest
+
+
+1 machine IP CORRECTWEMENT CONFIGURE  ->  coulpe (@IP, mask)
+				      -> @ router par default (default gateway)
+				      -> (0.0.0.0, 0.0.0.0) 
+				      -> il va toujours avoir un res == EC.DEST
+obs: TTL a chaque fois que le paquet est retransmis
+
+
+2 classless InterDomain Rounting(transparence 73)
+	- classe C
+	- introduire de la geographie dans le IP	
+	- le regroupemente de 2 RL en 1 seule cdest s'appelle agregation (supernetting)
+	- l'aggregation necessite d'une adjacence d'@ et fonction a l'echelle de bit 
