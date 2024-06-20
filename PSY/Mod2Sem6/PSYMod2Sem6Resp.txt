@@ -1,0 +1,23 @@
+Exercice de Synthese
+
+4)
+Le code ne donne pas de problemes de compilation. Pourtant, pendant l'execution est etrange pour plusieurs raisons:
+- Un text completement incorrect est produit
+- apenas o redator escreve apos o texto estranho
+- o redator se sobreesscreve antes de o buffer ser lido
+
+5)
+a) 
+	o thread com o writer n e criado
+b)
+	o efeito e que o leitor imediatamente le o elemento default do buffer (OVER) e termina o programa como consequencia
+
+8) sim
+9) sim
+
+11)
+a)
+ o resultado e 49 eh a qtd de linhas em um arquivo (ou, no caso, output) 
+b)
+ o comado seleciona as leituras ao buffer por cada lecteur em agrupado por lecteur(ordem crescente) &, por ultimo, remove os espacos no inicio da linhna de cada um dos lecteurs
+c) grep "Le rédacteur n°" lectRedac2.txt

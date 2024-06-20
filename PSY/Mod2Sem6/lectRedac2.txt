@@ -1,0 +1,49 @@
+Lancement du programme d'id   = 0x7fc54f695740
+Lancement du lecteur 1 d'id   = 0x7fc54ee93640
+Lancement du lecteur 2 d'id   = 0x7fc54e692640
+Lancement du lecteur 0 d'id   = 0x7fc54f694640
+Lancement du rédacteur 0 d'id = 0x7fc54de91640
+Le rédacteur n°0 écrit 0 dans le buffer 0
+Le rédacteur n°0 écrit 1 dans le buffer 1
+Le rédacteur n°0 écrit 2 dans le buffer 2
+          Le lecteur n°1 lit 0 dans le buffer 0
+     Le lecteur n°0 lit 0 dans le buffer 0
+               Le lecteur n°2 lit 0 dans le buffer 0
+Le rédacteur n°0 écrit 3 dans le buffer 0
+          Le lecteur n°1 lit 1 dans le buffer 1
+     Le lecteur n°0 lit 1 dans le buffer 1
+               Le lecteur n°2 lit 1 dans le buffer 1
+Le rédacteur n°0 écrit 4 dans le buffer 1
+          Le lecteur n°1 lit 2 dans le buffer 2
+     Le lecteur n°0 lit 2 dans le buffer 2
+               Le lecteur n°2 lit 2 dans le buffer 2
+Le rédacteur n°0 écrit 5 dans le buffer 2
+          Le lecteur n°1 lit 3 dans le buffer 0
+     Le lecteur n°0 lit 3 dans le buffer 0
+               Le lecteur n°2 lit 3 dans le buffer 0
+Le rédacteur n°0 écrit 6 dans le buffer 0
+          Le lecteur n°1 lit 4 dans le buffer 1
+     Le lecteur n°0 lit 4 dans le buffer 1
+               Le lecteur n°2 lit 4 dans le buffer 1
+Le rédacteur n°0 écrit 7 dans le buffer 1
+               Le lecteur n°2 lit 5 dans le buffer 2
+     Le lecteur n°0 lit 5 dans le buffer 2
+          Le lecteur n°1 lit 5 dans le buffer 2
+Le rédacteur n°0 écrit 8 dans le buffer 2
+     Le lecteur n°0 lit 6 dans le buffer 0
+          Le lecteur n°1 lit 6 dans le buffer 0
+               Le lecteur n°2 lit 6 dans le buffer 0
+Le rédacteur n°0 écrit 9 dans le buffer 0
+     Le lecteur n°0 lit 7 dans le buffer 1
+               Le lecteur n°2 lit 7 dans le buffer 1
+          Le lecteur n°1 lit 7 dans le buffer 1
+Le rédacteur n°0 écrit -1 dans le buffer 1
+     Le lecteur n°0 lit 8 dans le buffer 2
+          Le lecteur n°1 lit 8 dans le buffer 2
+               Le lecteur n°2 lit 8 dans le buffer 2
+          Le lecteur n°1 lit 9 dans le buffer 0
+               Le lecteur n°2 lit 9 dans le buffer 0
+     Le lecteur n°0 lit 9 dans le buffer 0
+          Le lecteur n°1 lit -1 dans le buffer 1
+               Le lecteur n°2 lit -1 dans le buffer 1
+     Le lecteur n°0 lit -1 dans le buffer 1
