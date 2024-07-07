@@ -92,7 +92,6 @@ int main(void){
 	sigprocmask(SIG_BLOCK,&newMask,NULL);
 	//set up alarm to go off at excatly MAX_TIME 
 	alarm(MAX_TIME);
-	//wait for child to end
 	int status=0;
 	int waitRes= wait(&status);
 	printf("\n\n");

@@ -15,11 +15,13 @@ hostname <<name>> -> changes the devices name to <<name>>
 line console 0 -> enter (config-line)# mode
 	       -> execute in config mode ((cofig)#)
 password <<password>> -> sets <<password>> as the password that'll be asked when entering the devices console
+
 login -> makes the device ask for a password to enter vty
       -> execute in command line mode (config-line)#
 enable password <<password>> -> makes device ask for password to enter privileged execution mode
 			     -> run in (config)# mode
-enable secret <<password>> -> samething as enable password <<password>> but the given password is encrypted when user tries to see it in console
+enable secret <<password>> -> samething as enable password <<password>> but more secure 
+			   -> password for privileged mode
 service password-encryption -> encrypts all currently set passwords
 banner motd "<<message>>" -> sets a message to appear when user connects to vty
 copy running-config startup-config -> saves the current running configuration as the startup configuration
@@ -54,3 +56,54 @@ arp -a -> print the arp table cache on computer
        -> use on computer not CISCO device
 9.3.4
 show ipv6 neighbours -> gives the ipv6 values of all the peripherics in the current network
+
+CASE study 
+login block-for <<time in seconds to be blocked for>> attempts <<num attempts until block>> within <<timeframe to count attempts in seconds>>
+	- execute in config mode
+security passwords <<attribute>> <<value>>
+	- ex: min-length
+no exec-timeout -> disables timeout on connections
+exec-timeout <<time>> <<>> -> enables time out on connections
+logging synchronous
+description <<text>> -> gives a interface a description
+		     -> use in interface configuration mode
+username <<>> password <<>> -> configure username
+			    -> config t mode
+ip domain-name <<>> -> priviledged mode
+crypto key generate rsa general-keys modulus 1024 -> config t mode
+			-> use 1024
+ip ssh version 2 -> enables ssh
+
+skill assessment ptsa
+no ip domain lookup -> disable DNS lookup
+		    -> config t mode
+ipv6 unicast-routing
+ipv6 address <<address>> -> use / notation (ex: A:0:3::/64)
+ipv6 address <<address>> link-local
+
+int range f0/1-4, f0/7-24 -> configure multiple interfaces at the same time
+shutdown -> turns the interface off
+	 -> execute in interface config mode 
+
+vtp mode <<mode>>
+	- ex: transparent
+spanning-tree mode <<>>
+		   - rapid-pvst
+spanning-tree portfast <<>>
+		      - default
+spanning-tree vlan <<ports>> priority <<>> 
+
+vlan <<>>
+name <<str>> -> sets vlan name
+
+configure ssh
+line vty 0 <<>>
+login local 
+transport input ssh
+exit
+
+switchport <<>> encapsulation dot1q
+configure unused switch 
+switchport mode access
+switchport access vlan <<>>
+shutdown

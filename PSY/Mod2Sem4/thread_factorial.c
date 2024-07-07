@@ -41,7 +41,7 @@ int main(int argc, char** argv){
 
 	for(int i=0;i<len;i++){
 		int res;
-		CHECK_CALL(pthread_join(tid[i],(void*)&res),"pthread join failed");
+		CHECK_CALL(pthread_join(tid[i],(void**)&res),"pthread join failed");
 		CHECK_CALL(res,"thread_function failed");
 		printf("the factorial of %ld is %ld\n",thread_data[i].input,thread_data[i].res);
 	}

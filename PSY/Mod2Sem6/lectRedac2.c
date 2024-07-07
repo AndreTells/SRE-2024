@@ -29,7 +29,11 @@ typedef void * (*pf_t) (void *);
 
 typedef struct {              /* buffer circulaire d'entiers                */
     int buffer[NBMAX_BUFFER]; /* la zone de stockage                        */
-    sem_t semBufferPlein;
+    int nReads[NBMAX_BUFFER]; /* nombre de fois qu'un position du buffer a  */ 
+			      /*  ete lu				    */
+    sem_t semAcessReads[NBMAX_BUFFER]; /* mutex pour acceder le buffer      */
+    				       /* nReads                            */
+    sem_t semBufferPlein[NBLECTEURS];
     sem_t semBufferVide;
     /*  ............................ à compléter  ......................... */
 } circBuffer_t;
@@ -60,13 +64,13 @@ circBuffer_t buf;
 
 sem_t semPrintf;
 
-sem_t semLecteurs;
 int numReads=0;
 /* ------------------------------------------------------------------------ */
 /*            P R O T O T Y P E S    D E    F O N C T I O N S               */
 /* ------------------------------------------------------------------------ */
 void   redacteur(long noR);
 void   lecteur(long noL);
+void   lecteurManager();
 void   init(circBuffer_t * b);
 void   tempo(int minDelai, int maxDelai);
 void   putLine (const char *s);
@@ -88,7 +92,6 @@ int main(int argc, char * argv[])
     srand(time(NULL));
     init(&buf);
     CHECK(sem_init(&semPrintf,0,1), "sem_init sur semPrintf");
-    CHECK(sem_init(&semLecteurs,0,0), "sem_init sur semLecteurs");
 
 #if !defined(NOREADER)
     for(int i=0;i<NBLECTEURS;i++) CHECK_T(pthread_create(&(tidLecteur[i]), NULL, (pf_t)lecteur,(void*)((long) i)),"pthread_create(lecteur)");
@@ -108,9 +111,8 @@ int main(int argc, char * argv[])
 #endif
 
     CHECK(sem_destroy(&(buf.semBufferVide)),"sem_destroy() sur semBufferVide");
-    CHECK(sem_destroy(&(buf.semBufferPlein)),"sem_destroy() sur semBufferPlein");
     CHECK(sem_destroy(&semPrintf), "sem_destroy() sur semPrintf");
-    CHECK(sem_destroy(&semLecteurs), "sem_destroy() sur semLecteurs");
+    for(int i=0;i<NBLECTEURS; i++) CHECK(sem_destroy(&(buf.semBufferPlein[i])), "sem_destroy() sur semBufferPlein");
     return 0;
 }
 
@@ -128,18 +130,27 @@ void  redacteur(long no)
 
     while  ( n != OVER ) {
 	CHECK(sem_wait(&(buf.semBufferVide)), "sem_wait() sur semBufferVide");
+	//writes in buffer
         if (n == MAX_VALUE)
             buf.buffer[i] = n = OVER;
         else
             buf.buffer[i] = n++;
+	// resets position's read count
+	buf.nReads[i] = 0;
+
+	//prints to terminal teh position has been written in
         sprintf(line,"Le rédacteur n°%ld écrit %d dans le buffer %d\n",
                 no, buf.buffer[i], i);
         SYNCHRONOUS_CALL(semPrintf, putLine(line));
+
+	// moves on to next position
         i++;
         if (i == NBMAX_BUFFER) i = 0;
-
-	CHECK(sem_post(&(buf.semBufferPlein)), "sem_post() sur semBufferPlein");
+	
+	//broadcast that position is free for reading to all readers
+	for(int i =0; i<NBLECTEURS; i++) CHECK(sem_post(&(buf.semBufferPlein[i])), "sem_post() sur semBufferPlein");
     }
+    pthread_exit(0);
 }
 /* ------------------------------------------------------------------------ */
 void  lecteur(long no)
@@ -154,33 +165,43 @@ void  lecteur(long no)
 
     while ( n != OVER ) {
        tempo(10, 100);
-	CHECK(sem_wait(&(buf.semBufferPlein)),"sem_wait() sur semBufferPlein");
+       // wait for a position to be free to be read
+	CHECK(sem_wait(&(buf.semBufferPlein[no])),"sem_wait() sur semBufferPlein");
+	
+	// read a position from the buffer
         n = buf.buffer[i];
         sprintf(line,"%*sLe lecteur n°%ld lit %d dans le buffer %d\n",
                 5 * (int)(no + 1), "   ", no,   n, i);
         SYNCHRONOUS_CALL(semPrintf, putLine(line));
+
+	// updates the nReads vector to mark the buffer position has been read
+	SYNCHRONOUS_CALL(buf.semAcessReads[i],buf.nReads[i]++);
+
+	//check if it was the last to read this position
+	if(buf.nReads[i] == NBLECTEURS){
+		CHECK(sem_post(&(buf.semBufferVide)), "sem_post() sur semBufferVide");
+	}
+
+	// go to next position	
         i++;
         if (i == NBMAX_BUFFER) i = 0;
 	
-	numReads ++;
-	if(numReads == NBLECTEURS){
-		numReads = 0;
-		CHECK(sem_post(&(buf.semBufferVide)), "sem_post() sur semBufferVide");
-		for(int j=0;j<NBLECTEURS;j++) CHECK(sem_post(&semLecteurs), "sem_post() sur semLecteurs");
-	}
-	else CHECK(sem_post(&(buf.semBufferPlein)), "sem_post() sur semBufferPlein");
-	CHECK(sem_wait(&semLecteurs),"sem_wait() sur semLecteurs");
     }
+    pthread_exit(0);
 }
 
 /* ------------------------------------------------------------------------ */
 void init(circBuffer_t * b)
 {
     int i;
-    for (i = 0; i < NBMAX_BUFFER; i++)
+    for (i = 0; i < NBMAX_BUFFER; i++){
         b->buffer[i] = OVER;
-    CHECK(sem_init(&(b->semBufferPlein),0,0),"sem_init() sur semBufferPlein");
+    	b->nReads[i] = 0;
+    	CHECK(sem_init(&(b->semAcessReads[i]),0,1),"sem_init() sur semAcessReads");
+    }
+
     CHECK(sem_init(&(b->semBufferVide),0,NBMAX_BUFFER),"sem_init() sur semBufferVide");
+    for(int i=0;i<NBLECTEURS; i++) CHECK(sem_init(&(b->semBufferPlein[i]),0,0), "sem_init sur semBufferPlein");
     /*  ............................ à compléter  ......................... */
 }
 

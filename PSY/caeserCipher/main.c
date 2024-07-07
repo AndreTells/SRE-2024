@@ -28,7 +28,7 @@ int CheckShiftedWordsExists(char* text,int shift, char* dictionary);
 char* ShiftWord(char* word, int shift);
 
 int main(void){
-	const char* text = "gfrgh fdhvdu";	
+	const char* text = "uhinbyl vlcwe ch nby quff";	
 	const char* dictionary = "shift test caesar dcode";
 	int min_i = -1;
 	int min_res = -1;
